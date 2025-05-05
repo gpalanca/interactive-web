@@ -1,0 +1,21 @@
+html, body{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#corner-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+#corner-img {
+  width: 80px;
+  height: 80px;
+}
+
+#corner-img:hover{
+transform: scaleZ(1.2);
+transition: transform 0.5s ease;
+}

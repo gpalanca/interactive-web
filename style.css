@@ -1,0 +1,31 @@
+/* Stretch background image */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('about-page.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'UnifrakturMaguntia', cursive; /* optional */
+  }
+  
+  /* Optional: load your font */
+  @font-face {
+    font-family: 'UnifrakturMaguntia';
+    src: url('unifrakturmaguntia-regular.ttf');
+  }
+  
+  /* Corner link */
+  .corner-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  /* Corner image styling */
+  .corner-image {
+    width: 130px;
+    height: 150px;
+  }
+  

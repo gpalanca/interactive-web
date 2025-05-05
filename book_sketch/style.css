@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Codystar:wght@300;400&family=Cutive&family=Lexend:wght@100..900&family=Rock+Salt&family=UnifrakturMaguntia&display=swap');
+
+body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+  cursor: url('stampcursor.png') 8 8, auto;
+
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+style{
+   font-family: "UnifrakturMaguntia", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+}
