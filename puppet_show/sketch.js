@@ -53,39 +53,34 @@ function draw() {
   image(puppet, width / 11, 160, width / 3 - 40, height / 2 - 40);
   image(corner, width, height, 10, 10);
   
-  image(border, width / 2 + 20, 10, width / 2 - 20, height - 10);  // Right border
+  image(border, width / 2 + 20, 10, width / 2 - 20, height - 10);  
   
   let coverLines = [
-    { text: "The Tragedy of", size: 26 },
-    { text: "Lady Puddlewick", size: 38 },
-    { text: "by", size: 20 },
-    { text: "William Shakespeare", size: 26 },
-    { text: "First performed at the Globe Theatre", size: 18 },
-    { text: "Printed in the Year of Our Lord 1623", size: 18 },
-    { text: "“A tragic tale of a lady whose dramatic flair,\nleads her to an epic downfall.”", size: 16 }
+    { text: "The Tragedy of", size: 30 },
+    { text: "Lady Puddlewick", size: 42 },
+    { text: "by", size: 24 },
+    { text: "William Shakespeare", size: 30 },
+    { text: "First performed at the Globe Theatre", size: 22 },
+    { text: "Printed in the Year of Our Lord 1623", size: 22 },
+    { text: "“A tragic tale of a lady whose dramatic flair,\nleads her to an epic downfall.”", size: 20 }
   ];
 
-  // Border calculations
-  let borderX = width / 2 + 5; // Right-side border
+  let borderX = width / 2 + 5; 
   let borderY = 10;
   let borderW = width / 2 - 20;
   let borderH = height - 40;
 
-  // Paragraph width inside the border
-  let paragraphWidth = borderW - 200;  // Reduce the width for padding
-  let paragraphX = borderX + (borderW - paragraphWidth) / 2;  // Centered inside right border
+  let paragraphWidth = borderW - 200; 
+  let paragraphX = borderX + (borderW - paragraphWidth) / 2;  
   
-  // Measure total height for all lines
   let lineHeightPadding = 10;
   let totalHeight = 0;
   for (let line of coverLines) {
     totalHeight += line.size + lineHeightPadding;
   }
 
-  // Positioning the text vertically centered
   let paragraphY = borderY + (borderH - totalHeight) / 2;
 
-  // Set text styles and position
   textAlign(CENTER, TOP);
   fill('#232323');
   noStroke();
@@ -94,11 +89,10 @@ function draw() {
   let currentY = paragraphY;
   for (let line of coverLines) {
     textSize(line.size);
-    text(line.text, paragraphX, currentY, paragraphWidth);  // Text centered inside border
+    text(line.text, paragraphX, currentY, paragraphWidth);  
     currentY += line.size + lineHeightPadding;
   }
 
-  // If insult selected, show the speech bubble
   if (selectedInsult !== null) {
     drawSpeechBubble(width / 4, 250, selectedInsult);
   }

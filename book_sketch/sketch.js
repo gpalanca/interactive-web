@@ -21,7 +21,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textAlign(CENTER, CENTER);
-  textSize(20);
+  textSize(18);
   textFont(myFont);
   noCursor();
   
@@ -45,30 +45,24 @@ function draw() {
   
 image(border, width/2 + 20, 10, width / 2 - 20, height - 10);
   
-let borderX = width / 2 + 20;
+let borderX = width / 2 + 10;
 let borderY = 10;
-let borderW = width / 2 - 40;
-let borderH = height - 20;
+let borderW = width / 2 - 20;
+let borderH = height - 40;
 
-let padding = 30;
-let paragraphWidth = (borderW - 2 * padding) / 2;
-let paragraphX = borderX + (borderW - paragraphWidth) / 2; 
-
-
+let paragraphWidth = borderW - 350; 
+let paragraphX = borderX + (borderW - paragraphWidth) / 2;
 let paragraph = "William Shakespeare, often regarded as the greatest playwright in the English language, transformed literature with his rich storytelling, complex characters, and poetic mastery. His works explore timeless themes like love, power, betrayal, and ambition, and have been adapted across cultures and centuries. From the tragedies of “Hamlet” and “Macbeth” to the comedies of “A Midsummer Night’s Dream” and “Twelfth Night,” Shakespeare’s influence on theater and language is unparalleled.";
 
-// Prepare text
 fill('#2C2C2C');
 noStroke();
 textAlign(LEFT, TOP);
-textSize(18);
+textSize(24);
 textFont(myFont);
 
-// Word wrapping
 let words = paragraph.split(' ');
 let line = '';
 let lines = [];
-
 for (let i = 0; i < words.length; i++) {
   let testLine = line + words[i] + ' ';
   if (textWidth(testLine) > paragraphWidth && i > 0) {
@@ -80,16 +74,13 @@ for (let i = 0; i < words.length; i++) {
 }
 lines.push(line);
 
-// Vertical centering WITH padding
 let lineHeight = 20;
-let totalTextHeight = lines.length * lineHeight;
-let paragraphY = borderY + padding + (borderH - 2 * padding - totalTextHeight) / 2;
+let totalHeight = lines.length * lineHeight;
+let paragraphY = borderY + (borderH - totalHeight) / 2; 
 
 for (let i = 0; i < lines.length; i++) {
   text(lines[i], paragraphX, paragraphY + i * lineHeight);
 }
-
-
 
 
   for (let box of insultBoxes) {
@@ -156,7 +147,7 @@ function wrapText(x, y, maxWidth, str, lineHeight, boxHeight) {
   let totalTextHeight = lines.length * lineHeight;
   let startY = y - totalTextHeight / 2 + lineHeight / 2;
 
-  textAlign(CENTER, TOP); // ensure horizontal centering
+  textAlign(CENTER, TOP); 
 
   for (let i = 0; i < lines.length; i++) {
     text(lines[i], x, startY + i * lineHeight);

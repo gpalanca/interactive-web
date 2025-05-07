@@ -1,13 +1,26 @@
 let knights = [];
 let helmetImages = [];
-let bg, border, corner;
-let myFont;
+let insultParticles = [];
+let bg, border, corner, myFont;
+let spear;
+
+let insults = [
+  "Thou art a boil!",
+  "You roguish hedge-born scullion!",
+  "Thine face offendeth mine eyes!",
+  "Away, you starveling!",
+  "Thou spongy folly-fallen knave!",
+  "Thou art as loathsome as a toad."
+];
+
+
 
 function preload(){
   
   bg = loadImage('paper2.png');
   border = loadImage('border.png');
   corner = loadImage('corner.png');
+  spear = loadImage('spear.png');
  myFont = loadFont('unifrakturmaguntia-regular.ttf');
   
   helmetImages.push(loadImage('helmet1.png'));
@@ -22,10 +35,11 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textAlign(CENTER, CENTER);
+  cursor ('none');
   
   
   
-  cornerLink = createA('../book_sketch/index.html', '');
+  cornerLink = createA('../index.html', '');
   
   let cornerImg = createImg('corner.png', 'corner');
   cornerLink.child(cornerImg);
@@ -47,8 +61,8 @@ function draw() {
   }
   
     if (knights.length === 0) {
-    let spacingX = (width / 2 - 200) / 2; // two columns
-    let spacingY = height / 5;
+    let spacingX = (width / 2 - 100) / 2; 
+    let spacingY = height / 4;
     let startX = width * 0.65;
     let startY = height / 3;
 
@@ -59,6 +73,15 @@ function draw() {
       let y = startY + row * spacingY;
       knights.push(new Knight(x, y, helmetImages[i], i % 6)); 
     }
+      
+        for (let i = insultParticles.length - 1; i >= 0; i--) {
+    insultParticles[i].update();
+    insultParticles[i].display();
+    if (insultParticles[i].isDead()) {
+      insultParticles.splice(i, 1);
+    }
+  }
+
   }
 
   for (let knight of knights) {
@@ -66,16 +89,18 @@ function draw() {
     knight.display();
   }
   
- let instruction = "Click upon the knightly helms, thou spongy folly-fallen knave!";
-  fill(20); // Dark ink color
+ let instruction = "In sooth, the tilt-yard and the Bard are kin; for as knights do break their lances in bold display, so do Shakespeare’s men clash words with wit and fire. The tourney’s charge and courtly grace live alike in Hal’s rise and Henry’s might. Both sport and speech do strive for honor, their glory fleeting, yet full of noble show. Thus jousting bout has commenced. Choose thy opponent sensibly. Click upon the knightly helms, thou spongy folly fallen knave!";
+  fill(20); 
   textFont(myFont);
-  textSize(22); // Adjust size as needed
+  textSize(24); 
   textAlign(CENTER, CENTER);
+  
+  
 
-  let boxW = width / 2 - 280; // width of text box inside border
-  let boxH = 150; // height of the text box
-  let textX = 10 + ((width / 2 - 20) - boxW) / 2; // center the box inside the border
-  let textY = height / 2 -100;
+let boxW = width / 2 - 300; 
+let boxH = 400; 
+let textX = 10 + ((width / 2 - 50) - boxW) / 2; 
+let textY = height / 2 -210;
 
 text(instruction, textX, textY, boxW, boxH);
 
@@ -85,21 +110,41 @@ text(instruction, textX, textY, boxW, boxH);
     knight.display();
   }
 
-  if (knights.length === 0) {
-    let spacingX = (width / 2 - 200) / 2; // two columns
-    let spacingY = height / 5;
-    let startX = width * 0.65;
-    let startY = height / 3;
-
-    for (let i = 0; i < helmetImages.length; i++) {
-      let col = i % 2;
-      let row = Math.floor(i / 2);
-      let x = startX + col * spacingX;
-      let y = startY + row * spacingY;
-      knights.push(new Knight(x, y, helmetImages[i], i % 6));
-    }
-  }
+ if (knights.length === 0) {
+  let cols = 2;
+  let helmetWidth = 150;
+  let helmetHeight = 180;
+  let paddingX = 300;
+  let paddingY = 500;
   
+  let spacingX = helmetWidth + paddingX;
+  let spacingY = helmetHeight + paddingY;
+  
+  let startX = width * 0.6;
+  let startY = height * 0.2;
+
+  for (let i = 0; i < helmetImages.length; i++) {
+    let col = i % cols;
+    let row = Math.floor(i / cols);
+    let x = startX + col * spacingX;
+    let y = startY + row * spacingY;
+    knights.push(new Knight(x, y, helmetImages[i], i % 6));
+  }
+}
+
+
+for (let i = insultParticles.length - 1; i >= 0; i--) {
+  insultParticles[i].update();
+  insultParticles[i].display();
+  if (insultParticles[i].isDead()) {
+    insultParticles.splice(i, 1);
+  }
+}
+
+image(spear, mouseX, mouseY, 300, 300); 
+
+
+
 }
 
 function mousePressed() {
@@ -121,44 +166,27 @@ class Knight {
     this.angle = 0;
     this.offset = 0;
     this.scale = 1;
+    this.insult = ''; // new
   }
 
   contains(px, py) {
     return dist(px, py, this.x, this.y) < this.r;
   }
 
-  react() {
+    react() {
+    for (let i = 0; i < 3; i++) {
+      let insult = random(insults);
+      insultParticles.push(new InsultParticle(this.x, this.y, insult));
+    }
     this.timer = 30;
   }
+
 
   update() {
     if (this.timer > 0) {
       this.timer--;
-
-      switch (this.type) {
-        case 0: // Shake
-          this.angle = random(-0.1, 0.1);
-          break;
-        case 1: // Bounce
-          this.offset = sin(frameCount * 0.3) * 10;
-          break;
-        case 2: // Grow
-          this.scale = 1.2;
-          break;
-        case 3: // Rotate
-          this.angle += 0.1;
-          break;
-        case 4: // Wobble
-          this.angle = sin(frameCount * 0.5) * 0.3;
-          break;
-        case 5: // Pulse
-          this.scale = 1 + sin(frameCount * 0.4) * 0.1;
-          break;
-      }
     } else {
-      this.angle = 0;
-      this.offset = 0;
-      this.scale = 1;
+      this.insult = '';
     }
   }
 
@@ -168,11 +196,73 @@ class Knight {
     rotate(this.angle);
     scale(this.scale);
     imageMode(CENTER);
+  
+    noFill();
+    stroke(0);
+    strokeWeight(4);
+    rectMode(CENTER);
+    rect(0, 0, 150, 170); 
+
+    strokeWeight(2);
+    rect(0, 0, 140, 160); 
+
     image(this.img, 0, 0, 130, 150);
     pop();
+  
+    if (this.insult !== '') {
+      push();
+      textFont(myFont);
+      textSize(18);
+      fill(20);
+      textAlign(CENTER, BOTTOM);
+      text(this.insult, this.x, this.y - 80);
+      pop();
+    }
+  }
+  
+}
+
+class InsultParticle {
+  constructor(x, y, text) {
+    this.x = x;
+    this.y = y;
+    this.text = text;
+    this.vx = random(-2, 2);
+    this.vy = random(-4, -1);
+    this.alpha = 255;
+    this.angle = random(-PI/8, PI/8);
+    this.rotation = random(-0.05, 0.05);
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.05; 
+    this.alpha -= 3;
+    this.angle += this.rotation;
+  }
+
+  display() {
+    push();
+    translate(this.x, this.y);
+    rotate(this.angle);
+    textFont(myFont);
+    textSize(18);
+    fill(20, this.alpha);
+    textAlign(CENTER);
+    text(this.text, 0, 0);
+    pop();
+  }
+
+  isDead() {
+    return this.alpha <= 0;
   }
 }
 
+
+
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  cursor ('none');
 }

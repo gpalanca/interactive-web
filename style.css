@@ -1,4 +1,4 @@
-/* Stretch background image */
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&family=UnifrakturMaguntia&display=swap');
 body {
     margin: 0;
     padding: 0;
@@ -7,25 +7,28 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-    font-family: 'UnifrakturMaguntia', cursive; /* optional */
+    font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
   }
   
-  /* Optional: load your font */
-  @font-face {
-    font-family: 'UnifrakturMaguntia';
-    src: url('unifrakturmaguntia-regular.ttf');
-  }
-  
-  /* Corner link */
   .corner-link {
     position: absolute;
     top: 0;
     right: 0;
   }
   
-  /* Corner image styling */
   .corner-image {
     width: 130px;
     height: 150px;
+  }
+  
+  .bottom-right-text {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-family: 'Tangerine', cursive; 
+    font-size: 32px;
+    color: #141414; 
   }
   
